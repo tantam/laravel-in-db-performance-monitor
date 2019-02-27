@@ -3,6 +3,7 @@
 namespace ASamir\InDbPerformanceMonitor;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 class LogRequests extends Model {
 
@@ -53,6 +54,9 @@ class LogRequests extends Model {
 
         $neglict = config('inDbPerformanceMonitor.IN_DB_MONITOR_NEGLICT_PARAMS_CONTAIN');
         foreach ($data as $k => $v)
+            if($v instanceof UploadedFile){
+                $data[$k] = '%_UploadedFile_%';
+            }
             foreach ($neglict as $n)
                 if (strpos(trim(strtolower($k)), trim(strtolower($n))) !== false)
                     $data[$k] = '%_HIDDEN_%';
