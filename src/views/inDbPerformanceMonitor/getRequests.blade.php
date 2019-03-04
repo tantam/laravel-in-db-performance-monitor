@@ -180,7 +180,15 @@
                         @if($req->is_json_response == '1')
                         <span class="label label-warning">JSON Response</span>
                         @endif
-                        <textarea readonly="" class="form-control">{{ json_encode(unserialize($req->parameters)) }}</textarea>
+                        <textarea readonly="" class="form-control">
+                             <?php
+                            try{
+                                echo json_encode(unserialize($req->parameters));
+                            }catch (Exception $e){
+                                echo "Failed to unserialize (".$e->getMessage().")";
+                            }
+                            ?>
+                        </textarea>
                     </td>
                 </tr>
                 @endforeach
