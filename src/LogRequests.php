@@ -35,7 +35,8 @@ class LogRequests extends Model {
         // Store IP info.
         LogIPs::saveIPInfo(request()->ip());
 
-        request()->request->add(['__asamir_request_id' => $req->id]);
+        // Use replace method to support all parameter type (json, query, form-data)
+        request()->replace(array_merge(request()->all(),['__asamir_request_id' => $req->id]));
 
         // Log queries
         LogQueries::inDbLogQueries();
