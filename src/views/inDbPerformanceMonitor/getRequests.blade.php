@@ -159,7 +159,15 @@
                     <td style="text-align: center">{{$req->exec_time}} s</td>
                     <td rowspan="2" style="text-align: center">
                         <p><b>Session ID:</b> {{$req->session_id}}</p>
-                        <p><b>Session Data:</b><textarea readonly="" class="form-control">{{ json_encode(unserialize($req->session_data)) }}</textarea></p>
+                        <p><b>Session Data:</b><textarea readonly="" class="form-control">
+                                <?php
+                                    try{
+                                        echo json_encode(unserialize($req->session_data));
+                                    }catch (Exception $e){
+                                        echo "Failed to unserialize (".$e->getMessage().")";
+                                    }
+                                ?>
+                            </textarea></p>
                     </td>
                 </tr>
                 <tr>
@@ -202,4 +210,3 @@
 </script>
 
 @endsection
-
